@@ -5,6 +5,8 @@
  * 1. Introduction to Java helpful.
  */
 
+import java.sql.Array;
+
 public abstract class Bag {
     /*
      * TODO: Create the following private instance variables
@@ -14,7 +16,10 @@ public abstract class Bag {
      *       - an array of Strings named contents
      */
 
-
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
 
 
     /*
@@ -26,6 +31,12 @@ public abstract class Bag {
      * be empty (e.g. numberOfContents is 0 and an empty String array for
      * its contents.)
      */
+    public Bag(String color, int capacity) {
+        this.capacity = capacity;
+        this.color = color;
+        this.numberOfContents = 0;
+        this.contents = new String[this.capacity];
+    }
 
 
 
@@ -38,6 +49,17 @@ public abstract class Bag {
      *           - getCapacity
      */
 
+    public String getColor() {
+        return this.color;
+    }
+
+    public int getNumberOfContents() {
+        return this.numberOfContents;
+    }
+
+    public int getCapacity() {
+        return this.capacity;
+    }
 
 
 
@@ -46,7 +68,9 @@ public abstract class Bag {
      *       color of this bag to the given color.
      */
 
-
+    public void setColor(String color) {
+        this.color = color;
+    }
 
 
 
@@ -60,6 +84,15 @@ public abstract class Bag {
      *       This method should return true if the item was added
      *       and false otherwise.
      */
+
+    public Boolean addItem(String item) {
+        if (this.numberOfContents < this.capacity) {
+            this.contents[numberOfContents] = item;
+            this.numberOfContents += 1;
+            return true;
+        }
+        return false;
+    }
 
 
 
@@ -76,7 +109,12 @@ public abstract class Bag {
      * @return
      */
 
-
+    public String popItem() {
+        numberOfContents -= 1;
+        String item = this.contents[numberOfContents];
+        this.contents[numberOfContents] = null;
+        return item;
+    }
 
 
 
@@ -87,7 +125,13 @@ public abstract class Bag {
      */
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
-
+        this.capacity += n;
+        String[] temp = this.contents.clone();
+        this.contents = new String[this.capacity];
+        //System.arraycopy(temp, 0, this.contents, 0, contents.length - 1);
+        for (int i=0; i < temp.length; i++) {
+            this.contents[i] = temp[i];
+        }
     }
 
     /**
